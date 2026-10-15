@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <title>RomaLab Scientifico - Authentic Roman Cuisine & Science</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
+  <meta name="theme-color" content="#1c1917">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="RomaLab">
+  <meta name="application-name" content="RomaLab">
+</head>
+<body>
+
+  <!-- SPLASH SCREEN -->
+  <div id="splashScreen" class="splash-screen">
+    <div class="splash-content">
+      <div class="splash-icon-wrap">
+        <img src="icons/icon-192.png" alt="RomaLab Logo" class="splash-logo" width="96" height="96">
+      </div>
+      <h1 class="splash-title" data-i18n="appName">RomaLab Scientifico</h1>
+      <p class="splash-tagline" data-i18n="appTagline">Autentica Cucina Romana & Cinetica dell'Emulsione Gastronomica</p>
+      <div class="splash-loader">
+        <div class="splash-loader-bar"></div>
+      </div>
+      <span class="splash-version" data-i18n="splashVersion">v1.0.0 Pro • Edizione Internazionale</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-container">
+      <div class="header-brand-row">
+        <div class="logo-badge">
+          <span class="logo-icon">🏛️</span>
+          <div class="logo-text">
+            <h1 data-i18n="appName">RomaLab Scientifico</h1>
+          </div>
+        </div>
+      </div>
+      <div class="header-actions-row">
+        <button id="langToggleBtn" class="header-action-btn" aria-label="Cambia Lingua">
+          🌐 <span id="currentLangLabel">IT</span>
+        </button>
+        <button id="unitToggleBtn" class="header-action-btn" aria-label="Cambia Unità">
+          ⚖️ <span id="currentUnitLabel">Metric (°C/g)</span>
+        </button>
+        <button id="troubleshootBtn" class="header-action-btn" aria-label="Pronto Soccorso">
+          🆘 <span data-i18n="btnTroubleshoot">Pronto Soccorso</span>
+        </button>
+        <button id="themeToggleBtn" class="header-action-btn" aria-label="Cambia Tema">
+          🌓
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- RECIPE SELECTOR (THE BIG 4) -->
+  <div class="recipe-selector-wrap">
+    <div class="recipe-selector-grid">
+      <div class="recipe-chip active" data-recipe="carbonara">
+        <span class="chip-icon">🍳</span>
+        <span class="chip-name">Carbonara</span>
+      </div>
+      <div class="recipe-chip" data-recipe="cacioepepe">
+        <span class="chip-icon">🧀</span>
+        <span class="chip-name">Cacio e Pepe</span>
+      </div>
+      <div class="recipe-chip" data-recipe="amatriciana">
+        <span class="chip-icon">🍅</span>
+        <span class="chip-name">Amatriciana</span>
+      </div>
+      <div class="recipe-chip" data-recipe="gricia">
+        <span class="chip-icon">🥓</span>
+        <span class="chip-name">Gricia</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN APPLICATION CONTENT -->
+  <main class="main-content">
+
+    <!-- 1. RECIPE HERO SUMMARY -->
+    <section class="card recipe-hero-card">
+      <h2 id="recipeHeroTitle" class="recipe-hero-title">Spaghetti alla Carbonara</h2>
+      <p id="recipeHeroDesc" class="recipe-hero-desc">Tuorli freschi, guanciale croccante, Pecorino Romano DOP e pepe tostato.</p>
+      <div class="recipe-meta-row">
+        <span class="meta-badge">📍 <span id="recipeMetaOrigin">Roma (1944)</span></span>
+        <span class="meta-badge">⚡ <span id="recipeMetaDiff">Media</span></span>
+        <span class="meta-badge">🔬 <span id="recipeMetaEmulsion">Emulsione 62-66°C</span></span>
+      </div>
+    </section>
+
+    <!-- 2. SCIENTIFIC PORTION CALCULATOR -->
+    <section class="card" id="calculatorSection">
+      <div class="card-header">
+        <h3 class="card-title">⚖️ <span data-i18n="ingredientsTitle">Dosaggi Scientifici al Grammo</span></h3>
+        <p class="card-subtitle" data-i18n="appTagline">Calcolo proporzionale automatico di uova, grasso fuso e amido d'acqua.</p>
+      </div>
+
+      <!-- Servings Stepper -->
+      <div class="stepper-row">
+        <div class="stepper-label">
+          <span class="stepper-title" data-i18n="servings">Numero Persone</span>
+          <span class="stepper-desc" id="servingsHint">Porzione standard: 100g pasta a persona</span>
+        </div>
+        <div class="stepper-controls">
+          <button id="servingsMinus" class="stepper-btn" aria-label="Diminuisci">-</button>
+          <span id="servingsDisplay" class="stepper-display">4</span>
+          <button id="servingsPlus" class="stepper-btn" aria-label="Aumenta">+</button>
+        </div>
+      </div>
+
+      <!-- Ingredients Dynamic List -->
+      <div id="ingredientList" class="ingredient-list">
+        <!-- Rendered dynamically by js/app.js -->
+      </div>
+    </section>
+
+    <!-- 3. THERMODYNAMIC EMULSION WINDOW -->
+    <section class="card thermal-gauge-card" id="thermalSection">
+      <div class="card-header">
+        <h3 class="card-title">🌡️ <span data-i18n="emulsionThermodynamics">Finestra Termica di Mantecatura</span></h3>
+        <p class="card-subtitle">La fisica dell'emulsione tra amidi, lipidi del guanciale e proteine.</p>
+      </div>
+
+      <div class="temp-indicator-box">
+        <div>
+          <div class="temp-target-label">Zona Sicura di Mantecatura:</div>
+          <div id="tempTargetDisplay" class="temp-target-range">58°C - 65°C</div>
+        </div>
+        <span style="font-size: 2rem;">🍳</span>
+      </div>
+
+      <div class="temp-bar-wrap">
+        <div class="temp-segment-cold" title="Troppo freddo (<50°C)"></div>
+        <div class="temp-segment-optimal" title="Zona d'Oro Emulsione (58-65°C)"></div>
+        <div class="temp-segment-danger" title="Pericolo Frittata (>68°C)"></div>
+      </div>
+
+      <p id="thermalExplanationText" class="thermal-explanation">
+        A 64-66°C la lecitina dei tuorli intrappola il grasso fuso del guanciale formando una crema vellutata. Oltre i 68°C le proteine coagulano trasformando la crema in frittata.
+      </p>
+    </section>
+
+    <!-- 4. STEP-BY-STEP LIVE KITCHEN GUIDE -->
+    <section class="card" id="liveKitchenSection">
+      <div class="card-header">
+        <h3 class="card-title">⏱️ <span data-i18n="startCooking">Preparazione Passo-Passo con Timer</span></h3>
+        <p class="card-subtitle">Segui le fasi in diretta per non sbagliare tempi e temperature.</p>
+      </div>
+
+      <div id="stepsList" class="steps-container">
+        <!-- Rendered dynamically by js/app.js -->
+      </div>
+    </section>
+
+    <!-- 5. INTERNATIONAL INGREDIENT & SUBSTITUTION GUIDE -->
+    <section class="card" id="scienceSection">
+      <div class="card-header">
+        <h3 class="card-title">🧪 <span data-i18n="substitutionsTitle">Guida Internazionale agli Ingredienti</span></h3>
+        <p class="card-subtitle">Disciplinari, chimica e sostituti ammessi all'estero.</p>
+      </div>
+
+      <div class="trouble-item">
+        <div class="trouble-q">🥓 Guanciale vs Bacon vs Pancetta</div>
+        <div class="trouble-a" data-i18n="guancialeNote">
+          Il guanciale ha un grasso nobile a basso punto di fusione che crea un'emulsione vellutata. Alternativa accettabile all'estero: Pancetta tesa non affumicata. Evitare il bacon americano affumicato con zucchero.
+        </div>
+      </div>
+
+      <div class="trouble-item">
+        <div class="trouble-q">🧀 Pecorino Romano DOP & Il Taglio</div>
+        <div class="trouble-a" data-i18n="pecorinoNote">
+          Formaggio ovino a pasta dura e sapore sapido. Se all'estero risulta troppo pungente, il compromesso gourmet è il taglio 70% Pecorino Romano DOP e 30% Parmigiano Reggiano 24 mesi.
+        </div>
+      </div>
+
+      <div class="trouble-item">
+        <div class="trouble-q">🌾 L'Amido della Pasta Trafilata al Bronzo</div>
+        <div class="trouble-a" data-i18n="pastaNote">
+          La trafilatura al bronzo crea una superficie rugosa che cede amido libero nell'acqua. L'amido agisce da tensioattivo chimico, legando indissolubilmente l'acqua e il grasso fluido del guanciale.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TROUBLESHOOTING MODAL -->
+  <div id="troubleshootModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" data-i18n="troubleshootTitle">🆘 Pronto Soccorso Gastronomico</h3>
+        <button id="closeTroubleshootBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <p class="card-subtitle" style="margin-bottom: 1rem;" data-i18n="troubleshootDesc">
+        Hai sbagliato qualcosa in padella? Ecco come la fisica ti aiuta a salvare il piatto.
+      </p>
+
+      <div class="trouble-item">
+        <div class="trouble-q">❓ <span data-i18n="troubleClumpTitle">Il pecorino ha fatto i grumi gommosi?</span></div>
+        <div class="trouble-a" data-i18n="troubleClumpSol"></div>
+      </div>
+
+      <div class="trouble-item">
+        <div class="trouble-q">❓ <span data-i18n="troubleCurdleTitle">L'uovo ha iniziato a rapprendersi (effetto frittata)?</span></div>
+        <div class="trouble-a" data-i18n="troubleCurdleSol"></div>
+      </div>
+
+      <div class="trouble-item">
+        <div class="trouble-q">❓ <span data-i18n="troubleSaltyTitle">Il piatto risulta eccessivamente salato?</span></div>
+        <div class="trouble-a" data-i18n="troubleSaltySol"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIXED BOTTOM NAVIGATION BAR -->
+  <nav class="mobile-bottom-nav">
+    <button class="mobile-nav-btn active" data-tab="calculatorSection">
+      <span class="mobile-nav-icon">⚖️</span>
+      <span class="mobile-nav-label" data-i18n="navCalculator">Dosi</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="liveKitchenSection">
+      <span class="mobile-nav-icon">⏱️</span>
+      <span class="mobile-nav-label" data-i18n="navLiveKitchen">Cottura</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="thermalSection">
+      <span class="mobile-nav-icon">🌡️</span>
+      <span class="mobile-nav-label">Termica</span>
+    </button>
+    <button class="mobile-nav-btn" data-tab="scienceSection">
+      <span class="mobile-nav-icon">🧪</span>
+      <span class="mobile-nav-label" data-i18n="navScience">Scienza</span>
+    </button>
+  </nav>
+
+  <!-- SCRIPTS -->
+  <script src="js/i18n.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+# Node & OS
+node_modules/
+.DS_Store
+Thumbs.db
+npm-debug.log*
+
+# Android & Gradle
+.gradle/
+build/
+*/build/
+android-app/build/
+android-app/app/build/
+android-app/local.properties
+.idea/
+*.iml
+android-app/*.iml
+android-app/app/*.iml
+.cxx/
+
+# Artifacts
+*.apk
+*.aab
+!romalab-scientifico-v1.0.0-debug.apk

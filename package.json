@@ -1,0 +1,23 @@
+{
+  "name": "romalab-scientifico",
+  "version": "1.0.0",
+  "description": "RomaLab Scientifico - Authentic Roman Cuisine, Kinetic Calculations & Science of Tradition",
+  "main": "js/app.js",
+  "scripts": {
+    "sync:android": "node scripts/sync_android_assets.js",
+    "test": "node tests/test_romalab_engine.js"
+  },
+  "keywords": [
+    "cucina-romana",
+    "carbonara",
+    "cacio-e-pepe",
+    "amatriciana",
+    "gricia",
+    "gastronomy",
+    "culinary-science",
+    "pwa",
+    "android"
+  ],
+  "author": "Luciano Liberati",
+  "license": "MIT"
+}

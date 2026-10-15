@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">RomaLab Scientifico</string>
+
+    <!--
+      CONFIGURAZIONE PUBBLICITÀ GOOGLE ADMOB (ROMALAB)
+      ======================================================================================
+      Per il collaudo iniziale sono impostati gli ID di test ufficiali certificati di Google.
+      Una volta registrata l'app RomaLab su AdMob, basterà inserire qui gli ID reali.
+      ======================================================================================
+    -->
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+</resources>
