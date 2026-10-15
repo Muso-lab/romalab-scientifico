@@ -1,0 +1,79 @@
+{
+  "recipeTips": {
+    "carbonara": {
+      "easyTip": "💡 Easy Mode: Separa 2 cucchiai di acqua di cottura e lasciala raffreddare a 50°C per stemperare i tuorli e il pecorino prima di unire alla pasta. Manteca SEMPRE fuori dal fuoco.",
+      "proTip": "🏆 Pro Chef: Usa solo tuorli freschi di galline allevate a terra, grasso di guanciale fuso a 80°C senza bruciare, e mantecatura ad onda tra 62°C e 65°C per massimizzare la viscosità della lecitina."
+    },
+    "cacioepepe": {
+      "easyTip": "💡 Easy Mode: Prepara una pastella di pecorino con acqua tiepida a 50°C a parte in una ciotola con una frusta. Aggiungila alla pasta solo quando la padella è allontanata dal fuoco.",
+      "proTip": "🏆 Pro Chef: Estrazione dell'amido per risottatura violenta negli ultimi 3 minuti. Mantecatura dinamica a 58°C: la concentrazione di amilosio deve formare ponti di idrogeno con la caseina."
+    },
+    "amatriciana": {
+      "easyTip": "💡 Easy Mode: Togli il guanciale dalla padella non appena è dorato e tienilo da parte. Cuoci il pomodoro nel grasso e unisci il guanciale solo all'ultimo sopra il piatto per mantenerlo croccante.",
+      "proTip": "🏆 Pro Chef: Sfumatura con vino bianco secco sui bordi caldi della padella per deglassare gli zuccheri caramellati. Pomodoro San Marzano schiacciato a mano cotto a fiamma viva per non perdere freschezza."
+    },
+    "gricia": {
+      "easyTip": "💡 Easy Mode: Aggiungi poca acqua di cottura alla volta sul fondo di grasso del guanciale. Non versare mai il pecorino a contatto col fondo caldo della padella: manteca saltando a mezz'aria.",
+      "proTip": "🏆 Pro Chef: Emulsione bifasica perfetta grasso nobile/amido. Pepe nero pestato al mortaio tostato a secco a 150°C prima della risottatura per sprigionare la piperina."
+    },
+    "saltimbocca": {
+      "easyTip": "💡 Easy Mode: Infarina solo il lato inferiore della carne (non il prosciutto). Cuoci con un coperchio a fuoco medio per 60 secondi: la carne rimarrà morbidissima e succulenta.",
+      "proTip": "🏆 Pro Chef: Sfumatura con vino bianco a fuoco vivissimo (deglazing a 160°C) per creare una salsa vellutata e lucida col burro nocciola freddo montato all'ultimo."
+    },
+    "coda": {
+      "easyTip": "💡 Easy Mode: Se hai poco tempo, puoi usare la pentola a pressione per i primi 45 minuti e poi finire a fuoco lento senza coperchio per far addensare il sugo.",
+      "proTip": "🏆 Pro Chef: Cottura dolce a 85°C per 4 ore per idrolizzare completamente il collagene in gelatina. Aggiunta canonica di cacao amaro e pinoli tostati negli ultimi 15 minuti."
+    },
+    "abbacchio": {
+      "easyTip": "💡 Easy Mode: Marina le costolette per 15 minuti in un filo d'olio, rosmarino e aglio schiacciato. Scalda bene la bistecchiera antiaderente per non farle attaccare.",
+      "proTip": "🏆 Pro Chef: Contatto ad altissima temperatura (230°C) per 90 secondi per lato. Salatura rigorosamente a fine cottura con sale a scaglie per preservare l'osmosi dei succhi interni."
+    },
+    "carciofigiudia": {
+      "easyTip": "💡 Easy Mode: Pulisci bene togliendo le prime 4-5 file di foglie dure. Immergi in acqua acidulata con limone per evitare l'ossidazione prima di friggere.",
+      "proTip": "🏆 Pro Chef: Doppio bagno d'olio a immersione: prima a 140°C per cuocere il cuore, poi battitura a fiore e secondo tuffo a 180°C per 90 secondi per cristallizzare le foglie come patatine."
+    },
+    "carciofiromana": {
+      "easyTip": "💡 Easy Mode: Cuoci i carciofi a testa in giù in un pentolino stretto e dai bordi alti, coperti per metà d'acqua e olio con coperchio per cuocere uniformemente col vapore.",
+      "proTip": "🏆 Pro Chef: Farcia tradizionale di mentuccia romana (Calamintha nepeta), aglio e poco pangrattato. Stufatura ermetica 'a campana' a 92°C per mantenere le foglie morbide come burro."
+    },
+    "suppli": {
+      "easyTip": "💡 Easy Mode: Prepara il riso al ragù la sera prima o lascialo in frigo per 2 ore: il riso compatto e freddo è facilissimo da appallottolare senza che si sfaldi.",
+      "proTip": "🏆 Pro Chef: Doppia panatura fine senza farina. Frying sweet spot rigoroso a 175°C in olio profondo: cuore di fior di latte filante a 60°C e crosta croccante millimetrica."
+    },
+    "maritozzo": {
+      "easyTip": "💡 Easy Mode: Metti ciotola e fruste in freezer per 15 minuti prima di montare la panna: monterà in metà tempo e rimarrà densa e ferma a lungo.",
+      "proTip": "🏆 Pro Chef: Brioche romana con lievitazione controllata a 26°C, glassatura a freddo con sciroppo di zucchero e panna fresca montata al 38% di grassi con 10% di zucchero a velo."
+    }
+  },
+  "sosTroubleshooting": {
+    "troubleCurdleTitle": "L'uovo ha iniziato a rapprendersi (effetto frittata)?",
+    "troubleCurdleSol": "Rimuovi subito la padella dalla fonte di calore. Trasferisci la pasta in una ciotola fredda, unisci 1 cubetto di ghiaccio o 2 cucchiai d'acqua fredda e sbatti energicamente. Se i grumi sono già visibili, frulla 5 secondi col minipimer con un cucchiaio di acqua d'amido: la lecitina si ri-emulsionerà.",
+    
+    "troubleClumpTitle": "Il pecorino ha fatto i grumi gommosi?",
+    "troubleClumpSol": "La caseina supera i 65°C espellendo il siero. Sposta la padella dal fuoco, aggiungi 2-3 cucchiai di acqua di cottura ricca d'amido tiepida (55°C) e lavora velocemente con una frustina o un minipimer nel bicchiere prima di riunire alla pasta.",
+    
+    "troubleGuancialeTitle": "Il guanciale si è bruciato o è rimasto gommoso?",
+    "troubleGuancialeSol": "Se gommoso: fiamma troppo alta, il grasso profondo non è fuso (servono 8-10 min a fiamma dolce). Se bruciato: elimina i pezzi anneriti per evitare composti amari, filtra il grasso pulito e aggiungi pepe tostato fresco per riequilibrare l'aroma.",
+    
+    "troubleSaltyTitle": "Il piatto risulta eccessivamente salato?",
+    "troubleSaltySol": "Il Pecorino DOP stagionato contiene molto sale naturale. Regola aurea: dimezza il sale nell'acqua della pasta (max 5g/L). Per rimediare a piatto ultimato: allunga con acqua di cottura non salata e aggiungi pepe nero tostato (la piperina maschera la sapidità acuta).",
+    
+    "troubleAcidTitle": "Il pomodoro dell'Amatriciana risulta troppo acido o acquoso?",
+    "troubleAcidSol": "I pelati commerciali hanno spesso acido citrico aggiunto. Aggiungi una punta microscopica di bicarbonato di sodio (reazione chimica neutralizzante immediata) oppure un cucchiaino di grasso del guanciale, e fai sobbollire 2 minuti a fiamma viva per concentrare gli zuccheri.",
+    
+    "troubleCarciofiTitle": "I carciofi alla Giudìa sono duri o non si aprono a fiore?",
+    "troubleCarciofiSol": "Prima del secondo tuffo a 180°C, prendi il carciofo per il gambo e batti delicatamente la sommità a testa in giù su un tagliere per divaricare le brattee a corolla. Se il cuore è ancora coriaceo, prolunga di 4 minuti il primo bagno a 140°C.",
+    
+    "troubleSuppliTitle": "I supplì si aprono o la mozzarella fuoriesce nell'olio?",
+    "troubleSuppliSol": "Non usare riso tiepido: deve riposare in frigo per almeno 2 ore affinché l'amido sia compatto. Taglia la mozzarella e lasciala scolare per 1 ora. Esegui sempre una DOPPIA panatura (pastella o uovo + pangrattato fine) e friggi rigorosamente a 175°C.",
+    
+    "troubleCodaTitle": "La coda alla vaccinara è ancora dura dopo due ore?",
+    "troubleCodaSol": "Il collagene bovino necessita di idrolisi a 80-85°C per almeno 3 ore e mezza. Non alzare la fiamma. Aggiungi mezzo bicchiere di brodo o acqua calda, sigilla bene col coperchio e prosegui la cottura a fiamma minima finché la carne si stacca da sola con una forchetta.",
+    
+    "troubleSaltimboccaTitle": "I saltimbocca sono secchi o il prosciutto è indurito?",
+    "troubleSaltimboccaSol": "Il vitello non va mai cotto oltre 60-80 secondi sul lato infarinato. Il lato con salvia e prosciutto va scottato a contatto con la padella per soli 15-20 secondi, per evitare che la disidratazione indurisca il salume.",
+    
+    "troubleCreamTitle": "La panna del Maritozzo si smonta o si trasforma in burro?",
+    "troubleCreamSol": "Se la panna supera i 10°C, i globuli di grasso si rompono. Usa panna freddissima (3-4°C) e tieni ciotola e fruste in freezer per 15 minuti prima dell'uso. Se inizia a sgranare, unisci 2 cucchiai di panna liquida gelata e mescola delicatamente con una spatola."
+  }
+}

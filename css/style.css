@@ -522,6 +522,78 @@ body.light-mode .recipe-chip.active {
   color: #10b981;
 }
 
+.mode-recipe-tip-card {
+  margin-top: 0.45rem;
+  padding: 0.75rem 0.95rem;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.mode-recipe-tip-card.easy {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399;
+}
+
+.mode-recipe-tip-card.pro {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+[data-theme="light"] .mode-recipe-tip-card.easy,
+body.light-mode .mode-recipe-tip-card.easy {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+[data-theme="light"] .mode-recipe-tip-card.pro,
+body.light-mode .mode-recipe-tip-card.pro {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+.troubleshoot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.trouble-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  transition: all 0.15s ease;
+}
+
+.trouble-card:hover {
+  border-color: var(--accent);
+}
+
+.trouble-card-header {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.trouble-card-body {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
 /* ========================================== */
 /* MAIN CONTENT & CARDS                       */
 /* ========================================== */

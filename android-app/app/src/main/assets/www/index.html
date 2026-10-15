@@ -153,6 +153,9 @@
     <div id="modeDescriptionBanner" class="mode-description-banner">
       <!-- Populated dynamically via JS -->
     </div>
+    <div id="modeRecipeTipCard" class="mode-recipe-tip-card">
+      <!-- Populated dynamically via JS with active recipe's easyTip or proTip -->
+    </div>
   </div>
 
   <!-- MAIN APPLICATION CONTENT -->
@@ -343,7 +346,7 @@
 
   <!-- TROUBLESHOOTING MODAL -->
   <div id="troubleshootModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="troubleModalTitle">
-    <div class="modal-card">
+    <div class="modal-card troubleshoot-modal-card">
       <div class="modal-header">
         <h3 id="troubleModalTitle" class="modal-title" data-i18n="troubleshootTitle">🆘 Pronto Soccorso Gastronomico</h3>
         <button id="closeTroubleshootBtn" class="modal-close-btn" aria-label="Chiudi">&times;</button>
@@ -352,19 +355,8 @@
         Hai sbagliato qualcosa in padella? Ecco come la fisica ti aiuta a salvare il piatto.
       </p>
 
-      <div class="trouble-item">
-        <div class="trouble-q">❓ <span data-i18n="troubleClumpTitle">Il pecorino ha fatto i grumi gommosi?</span></div>
-        <div class="trouble-a" data-i18n="troubleClumpSol"></div>
-      </div>
-
-      <div class="trouble-item">
-        <div class="trouble-q">❓ <span data-i18n="troubleCurdleTitle">L'uovo ha iniziato a rapprendersi (effetto frittata)?</span></div>
-        <div class="trouble-a" data-i18n="troubleCurdleSol"></div>
-      </div>
-
-      <div class="trouble-item">
-        <div class="trouble-q">❓ <span data-i18n="troubleSaltyTitle">Il piatto risulta eccessivamente salato?</span></div>
-        <div class="trouble-a" data-i18n="troubleSaltySol"></div>
+      <div id="troubleshootModalList" class="troubleshoot-list">
+        <!-- Rendered dynamically by js/app.js across all 10 emergency scenarios -->
       </div>
     </div>
   </div>

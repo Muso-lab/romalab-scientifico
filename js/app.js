@@ -56,6 +56,7 @@
   const modeEasyBtn = document.getElementById('modeEasyBtn');
   const modeProBtn = document.getElementById('modeProBtn');
   const modeDescriptionBanner = document.getElementById('modeDescriptionBanner');
+  const modeRecipeTipCard = document.getElementById('modeRecipeTipCard');
 
   const recipeHeroTitle = document.getElementById('recipeHeroTitle');
   const recipeHeroDesc = document.getElementById('recipeHeroDesc');
@@ -97,6 +98,16 @@
         ? window.I18N.t('modeEasyDesc') 
         : window.I18N.t('modeProDesc');
       modeDescriptionBanner.classList.toggle('easy-active', currentLevel === 'easy');
+    }
+
+    // 0b. Update Recipe-Specific Mode Tip Card (Easy vs Pro)
+    if (modeRecipeTipCard) {
+      modeRecipeTipCard.className = `mode-recipe-tip-card ${currentLevel}`;
+      const tipText = currentLevel === 'easy'
+        ? (recipeData.easyTip || window.I18N.t('modeEasyDesc'))
+        : (recipeData.proTip || window.I18N.t('modeProDesc'));
+      const icon = currentLevel === 'easy' ? '⭐' : '🏆';
+      modeRecipeTipCard.innerHTML = `<span style="font-size:1.25rem; flex-shrink:0;">${icon}</span><div>${tipText}</div>`;
     }
 
     // 1. Update Hero
@@ -204,6 +215,16 @@
             easyHint = `<div class="ing-easy-hint">${window.I18N.t('hintPecorino')}</div>`;
           } else if (ing.key === 'water' && currentRecipe === 'cacioepepe') {
             easyHint = `<div class="ing-easy-hint">${window.I18N.t('hintWater')}</div>`;
+          } else if (ing.key === 'guanciale') {
+            easyHint = `<div class="ing-easy-hint">💡 Easy: Listarelle spesse 5-7mm a fuoco dolce per non seccare</div>`;
+          } else if (ing.key === 'flour' && currentRecipe === 'saltimbocca') {
+            easyHint = `<div class="ing-easy-hint">💡 Easy: Infarina solo il fondo carne, mai salvia o prosciutto</div>`;
+          } else if (ing.key === 'rice' && currentRecipe === 'suppli') {
+            easyHint = `<div class="ing-easy-hint">💡 Easy: Usa riso freddo di frigorifero per non farlo aprire</div>`;
+          } else if (ing.key === 'cream' && currentRecipe === 'maritozzo') {
+            easyHint = `<div class="ing-easy-hint">💡 Easy: Ciotola e fruste fredde di freezer per montare subito</div>`;
+          } else if (ing.key === 'artichoke') {
+            easyHint = `<div class="ing-easy-hint">💡 Easy: Rimuovi le prime 4-5 file di foglie dure e usa acqua acidulata</div>`;
           }
         }
 
@@ -529,9 +550,50 @@
     });
   }
 
-  // Troubleshoot Modal
+  // Troubleshoot Modal & Live First Aid Guide
+  function renderTroubleshootModal() {
+    const list = document.getElementById('troubleshootModalList');
+    if (!list || !window.I18N) return;
+    const currentLang = window.I18N.currentLang || 'it';
+    const dict = window.I18N.dict[currentLang] || window.I18N.dict['it'];
+    const itDict = window.I18N.dict['it'];
+
+    const troubleKeys = [
+      { q: 'troubleCurdleTitle', a: 'troubleCurdleSol', icon: '🍳', badge: 'Carbonara' },
+      { q: 'troubleClumpTitle', a: 'troubleClumpSol', icon: '🧀', badge: 'Cacio e Pepe' },
+      { q: 'troubleGuancialeTitle', a: 'troubleGuancialeSol', icon: '🥓', badge: 'Guanciale' },
+      { q: 'troubleSaltyTitle', a: 'troubleSaltySol', icon: '🧂', badge: 'Pecorino & Sale' },
+      { q: 'troubleAcidTitle', a: 'troubleAcidSol', icon: '🍅', badge: 'Amatriciana' },
+      { q: 'troubleSuppliTitle', a: 'troubleSuppliSol', icon: '🍘', badge: 'Supplì' },
+      { q: 'troubleCarciofiTitle', a: 'troubleCarciofiSol', icon: '🪻', badge: 'Carciofi' },
+      { q: 'troubleCodaTitle', a: 'troubleCodaSol', icon: '🥩', badge: 'Coda Vaccinara' },
+      { q: 'troubleSaltimboccaTitle', a: 'troubleSaltimboccaSol', icon: '🌿', badge: 'Saltimbocca' },
+      { q: 'troubleCreamTitle', a: 'troubleCreamSol', icon: '🥐', badge: 'Maritozzo Panna' }
+    ];
+
+    list.innerHTML = '';
+    troubleKeys.forEach(item => {
+      const qText = dict[item.q] || itDict[item.q];
+      const aText = dict[item.a] || itDict[item.a];
+      if (!qText) return;
+
+      const card = document.createElement('div');
+      card.className = 'trouble-card';
+      card.innerHTML = `
+        <div class="trouble-card-header">
+          <span>${item.icon}</span>
+          <span style="flex:1;">${qText}</span>
+          <span style="font-size:0.7rem; font-weight:700; background:rgba(245,158,11,0.15); color:var(--accent); padding:2px 8px; border-radius:12px; white-space:nowrap;">${item.badge}</span>
+        </div>
+        <div class="trouble-card-body">${aText}</div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
   if (troubleshootBtn && troubleshootModal) {
     troubleshootBtn.addEventListener('click', () => {
+      renderTroubleshootModal();
       troubleshootModal.classList.remove('hidden');
     });
   }
