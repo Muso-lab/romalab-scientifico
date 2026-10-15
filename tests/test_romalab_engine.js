@@ -19,25 +19,39 @@ require('../js/engine.js');
 
 console.log("=== ROMALAB SCIENTIFICO - ENGINE AUDIT ===");
 
-// 1. Test Italian Calculation
+// 1. Test Italian Calculation Standard vs Abbondante
 window.I18N.setLanguage('it');
 window.I18N.setUnit('metric');
 
-console.log("\n[TEST 1] Carbonara 4 persone (Metric - IT):");
-const carb4_it = window.RomaLabEngine.calculate('carbonara', 4);
-console.log(`Ricetta: ${carb4_it.name}`);
-carb4_it.ingredients.forEach(ing => {
+console.log("\n[TEST 1A] Carbonara 4 persone - Standard (100g/testa):");
+const carb4_std = window.RomaLabEngine.calculate('carbonara', 4);
+console.log(`Ricetta: ${carb4_std.name}`);
+carb4_std.ingredients.forEach(ing => {
   console.log(` - ${ing.name}: ${ing.formatted}`);
 });
-console.log(`Acqua consigliata: ${carb4_it.scienceMetrics.waterLiters} L con ${carb4_it.scienceMetrics.waterSaltGrams} g di sale`);
-console.log(`Grasso fuso stimato: ${carb4_it.scienceMetrics.renderedFatGrams} g`);
+console.log(`Acqua consigliata: ${carb4_std.scienceMetrics.waterLiters} L con ${carb4_std.scienceMetrics.waterSaltGrams} g di sale`);
 
-// Assert: Yolks for 4 people should be 4 + 1 = 5
-const yolkIng = carb4_it.ingredients.find(i => i.key === 'yolks');
-if (yolkIng && yolkIng.rawAmount === 5) {
-  console.log(" PASSED: Regola '1 a testa + 1 pe la padella' corretta (5 tuorli per 4 persone)");
+// Assert standard: pasta = 400g, yolks = 5
+const yolkStd = carb4_std.ingredients.find(i => i.key === 'yolks');
+const pastaStd = carb4_std.ingredients.find(i => i.key === 'pasta');
+if (yolkStd.rawAmount === 5 && pastaStd.rawAmount === 400) {
+  console.log(" PASSED: Standard Carbonara 4 persone corretta (400g pasta, 5 tuorli)");
 } else {
-  console.error(" FAILED: Regola tuorli errata!", yolkIng);
+  console.error(" FAILED: Standard Carbonara errata!", yolkStd, pastaStd);
+  process.exit(1);
+}
+
+console.log("\n[TEST 1B] Carbonara 4 persone - ABBONDANTE (130g/testa):");
+const carb4_abb = window.RomaLabEngine.calculate('carbonara', 4, 4 * 130);
+carb4_abb.ingredients.forEach(ing => {
+  console.log(` - ${ing.name}: ${ing.formatted}`);
+});
+const pastaAbb = carb4_abb.ingredients.find(i => i.key === 'pasta');
+const guancAbb = carb4_abb.ingredients.find(i => i.key === 'guanciale');
+if (pastaAbb.rawAmount === 520 && Math.round(guancAbb.rawAmount) === 312) {
+  console.log(" PASSED: Modalità Abbondante calcolata con successo (520g pasta, 312g guanciale)");
+} else {
+  console.error(" FAILED: Modalità Abbondante errata!", pastaAbb, guancAbb);
   process.exit(1);
 }
 
@@ -61,10 +75,30 @@ if (yolk2 && yolk2.rawAmount === 3) {
   process.exit(1);
 }
 
-// 3. Test Cacio e Pepe, Amatriciana, Gricia
-['cacioepepe', 'amatriciana', 'gricia'].forEach(rId => {
-  const res = window.RomaLabEngine.calculate(rId, 3);
-  console.log(`\n[TEST 3] ${rId.toUpperCase()} for 3 servings: OK (${res.ingredients.length} ingredients computed)`);
+// 3. Test All 11 Roman Classic Recipes Across All 8 Supported World Languages
+console.log("\n[TEST 3] Auditing all 11 classic recipes across 8 languages:");
+const languagesToTest = ['it', 'en', 'es', 'fr', 'de', 'pt', 'ja', 'zh'];
+const all11Recipes = [
+  // Primi
+  'carbonara', 'cacioepepe', 'amatriciana', 'gricia',
+  // Secondi
+  'saltimbocca', 'coda', 'abbacchio',
+  // Contorni & Fritti
+  'carciofigiudia', 'carciofiromana', 'suppli',
+  // Dolci
+  'maritozzo'
+];
+
+languagesToTest.forEach(langCode => {
+  window.I18N.setLanguage(langCode);
+  all11Recipes.forEach(rId => {
+    const res = window.RomaLabEngine.calculate(rId, 3);
+    if (!res || !res.name || res.ingredients.length === 0) {
+      console.error(` FAILED: Calculation failed for ${langCode} on recipe ${rId}`);
+      process.exit(1);
+    }
+  });
+  console.log(` ✅ ${langCode.toUpperCase()}: All 11 recipes parsed & calculated cleanly (${window.I18N.t('appName')})`);
 });
 
 // 4. Test Thermal Evaluator
@@ -81,4 +115,4 @@ if (danger.status === 'danger' && optimal.status === 'optimal') {
   process.exit(1);
 }
 
-console.log("\n=== ALL ENGINE TESTS PASSED! ===");
+console.log("\n=== ALL 11 RECIPES & ENGINE TESTS PASSED! ===");

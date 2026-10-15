@@ -1,6 +1,6 @@
 /**
  * RomaLab Scientifico - UI Application Controller
- * Handles interactive recipes, portion calculators, live timers, and i18n
+ * Handles interactive recipes, portion calculators, live timers, design system harmony & multi-language
  */
 
 (function () {
@@ -8,6 +8,8 @@
 
   // State
   let currentRecipe = 'carbonara';
+  let currentCategory = 'all';
+  let portionSize = 'standard'; // 'standard' (100g) | 'abbondante' (130g)
   let servings = 4;
   let currentLevel = 'pro'; // 'pro' | 'easy'
   let activeTimers = {};
@@ -39,10 +41,15 @@
   }
 
   // DOM Elements
+  const categoryPills = document.querySelectorAll('.category-pill');
   const recipeChips = document.querySelectorAll('.recipe-chip');
+  const portionSizeRow = document.getElementById('portionSizeRow');
+  const portionSizeBtns = document.querySelectorAll('.portion-size-btn');
+
   const servingsDisplay = document.getElementById('servingsDisplay');
   const servingsMinus = document.getElementById('servingsMinus');
   const servingsPlus = document.getElementById('servingsPlus');
+  const servingsHint = document.getElementById('servingsHint');
   const ingredientList = document.getElementById('ingredientList');
   const stepsList = document.getElementById('stepsList');
   
@@ -54,11 +61,16 @@
   const recipeHeroDesc = document.getElementById('recipeHeroDesc');
   const recipeMetaOrigin = document.getElementById('recipeMetaOrigin');
   const recipeMetaDiff = document.getElementById('recipeMetaDiff');
+  const recipeMetaEmulsion = document.getElementById('recipeMetaEmulsion');
   const thermalExplanationText = document.getElementById('thermalExplanationText');
   const tempTargetDisplay = document.getElementById('tempTargetDisplay');
 
   const langToggleBtn = document.getElementById('langToggleBtn');
   const currentLangLabel = document.getElementById('currentLangLabel');
+  const langModal = document.getElementById('langModal');
+  const closeLangModalBtn = document.getElementById('closeLangModalBtn');
+  const langOptionsGrid = document.getElementById('langOptionsGrid');
+
   const unitToggleBtn = document.getElementById('unitToggleBtn');
   const currentUnitLabel = document.getElementById('currentUnitLabel');
   const themeToggleBtn = document.getElementById('themeToggleBtn');
@@ -73,8 +85,11 @@
 
   function renderRecipe() {
     const lang = window.I18N.currentLang;
-    const recipeData = window.I18N.dict[lang].recipes[currentRecipe];
+    const dict = window.I18N.dict;
+    const recipeData = (dict[lang] && dict[lang].recipes && dict[lang].recipes[currentRecipe]) || (dict['it'] && dict['it'].recipes && dict['it'].recipes[currentRecipe]);
     if (!recipeData) return;
+
+    const isPrimo = (recipeData.category || 'primi') === 'primi';
 
     // 0. Update Level Mode Banner
     if (modeDescriptionBanner) {
@@ -85,107 +100,173 @@
     }
 
     // 1. Update Hero
-    recipeHeroTitle.textContent = recipeData.name;
-    recipeHeroDesc.textContent = recipeData.shortDesc;
-    recipeMetaOrigin.textContent = recipeData.origin;
-    recipeMetaDiff.textContent = currentLevel === 'easy' ? '⭐ Facile (Assistita)' : recipeData.difficulty;
-
-    if (currentRecipe === 'carbonara') {
-      tempTargetDisplay.textContent = window.I18N.formatTemp(58) + ' - ' + window.I18N.formatTemp(65);
-      thermalExplanationText.textContent = window.I18N.dict[lang].recipes.carbonara.scienceTip;
-    } else if (currentRecipe === 'cacioepepe') {
-      tempTargetDisplay.textContent = window.I18N.formatTemp(55) + ' - ' + window.I18N.formatTemp(62);
-      thermalExplanationText.textContent = window.I18N.dict[lang].recipes.cacioepepe.scienceTip;
-    } else {
-      tempTargetDisplay.textContent = window.I18N.formatTemp(65) + ' - ' + window.I18N.formatTemp(75);
-      thermalExplanationText.textContent = recipeData.scienceTip;
+    if (recipeHeroTitle) recipeHeroTitle.textContent = recipeData.name;
+    if (recipeHeroDesc) recipeHeroDesc.textContent = recipeData.shortDesc;
+    if (recipeMetaOrigin) recipeMetaOrigin.textContent = recipeData.origin;
+    if (recipeMetaDiff) {
+      recipeMetaDiff.textContent = currentLevel === 'easy' 
+        ? window.I18N.t('modeEasyLabel') 
+        : recipeData.difficulty;
     }
 
-    // 2. Calculate and render ingredients
-    const calc = window.RomaLabEngine.calculate(currentRecipe, servings);
-    servingsDisplay.textContent = servings;
+    // 2. Emulsion / Cooking Technique Target Windows
+    let tempRangeText = '';
+    if (currentRecipe === 'carbonara') {
+      tempRangeText = window.I18N.formatTemp(58) + ' - ' + window.I18N.formatTemp(65);
+    } else if (currentRecipe === 'cacioepepe') {
+      tempRangeText = window.I18N.formatTemp(55) + ' - ' + window.I18N.formatTemp(62);
+    } else if (currentRecipe === 'amatriciana' || currentRecipe === 'gricia') {
+      tempRangeText = window.I18N.formatTemp(65) + ' - ' + window.I18N.formatTemp(75);
+    } else if (currentRecipe === 'saltimbocca') {
+      tempRangeText = window.I18N.formatTemp(155) + ' - ' + window.I18N.formatTemp(165);
+    } else if (currentRecipe === 'coda') {
+      tempRangeText = window.I18N.formatTemp(80) + ' - ' + window.I18N.formatTemp(85);
+    } else if (currentRecipe === 'abbacchio') {
+      tempRangeText = window.I18N.formatTemp(220) + ' - ' + window.I18N.formatTemp(250);
+    } else if (currentRecipe === 'carciofigiudia') {
+      tempRangeText = window.I18N.formatTemp(140) + ' & ' + window.I18N.formatTemp(180);
+    } else if (currentRecipe === 'carciofiromana') {
+      tempRangeText = window.I18N.formatTemp(90) + ' - ' + window.I18N.formatTemp(95);
+    } else if (currentRecipe === 'suppli') {
+      tempRangeText = window.I18N.formatTemp(170) + ' - ' + window.I18N.formatTemp(175);
+    } else if (currentRecipe === 'maritozzo') {
+      tempRangeText = window.I18N.formatTemp(26) + '°C Liev. / ' + window.I18N.formatTemp(180) + ' Forno';
+    } else {
+      tempRangeText = 'Standard Chef';
+    }
 
-    ingredientList.innerHTML = '';
-    calc.ingredients.forEach(ing => {
-      const item = document.createElement('div');
-      item.className = 'ingredient-item';
-      
-      let icon = '🔸';
-      if (ing.key.includes('pasta')) icon = '🍝';
-      else if (ing.key.includes('guanciale')) icon = '🥓';
-      else if (ing.key.includes('yolks')) icon = '🍳';
-      else if (ing.key.includes('pecorino')) icon = '🧀';
-      else if (ing.key.includes('pepper')) icon = '🧂';
-      else if (ing.key.includes('pomodoro')) icon = '🍅';
-      else if (ing.key.includes('vino')) icon = '🍷';
-      else if (ing.key.includes('water')) icon = '💧';
+    if (tempTargetDisplay) tempTargetDisplay.textContent = tempRangeText;
+    if (recipeMetaEmulsion) recipeMetaEmulsion.textContent = tempRangeText;
+    if (thermalExplanationText) thermalExplanationText.textContent = recipeData.scienceTip;
 
-      let easyHint = '';
-      if (currentLevel === 'easy') {
-        if (ing.key === 'yolks') {
-          easyHint = `<div style="font-size:0.7rem; color:#10b981; font-weight:600; margin-top:2px;">💡 Easy: Puoi unire 1 albume per dare massima scorrevolezza alla crema</div>`;
-        } else if (ing.key === 'pecorino') {
-          easyHint = `<div style="font-size:0.7rem; color:#10b981; font-weight:600; margin-top:2px;">💡 Easy: Taglio consigliato 50% Pecorino + 50% Parmigiano</div>`;
-        } else if (ing.key === 'water' && currentRecipe === 'cacioepepe') {
-          easyHint = `<div style="font-size:0.7rem; color:#10b981; font-weight:600; margin-top:2px;">💡 Easy: Frulla acqua tiepida (55°C) e formaggio con una frustina o minipimer</div>`;
+    // 3. Portion Size Visibility & Calculation
+    if (portionSizeRow) {
+      portionSizeRow.classList.toggle('hidden', !isPrimo);
+    }
+
+    let calc;
+    if (isPrimo) {
+      const pastaGramsPerPerson = portionSize === 'abbondante' ? 130 : 100;
+      const customPastaWeight = servings * pastaGramsPerPerson;
+      calc = window.RomaLabEngine.calculate(currentRecipe, servings, customPastaWeight);
+
+      if (servingsHint) {
+        const formattedAmount = window.I18N.formatWeight(pastaGramsPerPerson);
+        servingsHint.textContent = portionSize === 'abbondante'
+          ? window.I18N.t('servingsHintAbbondante', { amount: formattedAmount })
+          : window.I18N.t('servingsHint', { amount: formattedAmount });
+      }
+    } else {
+      calc = window.RomaLabEngine.calculate(currentRecipe, servings);
+      if (servingsHint) {
+        servingsHint.textContent = window.I18N.t('servings') + ': ' + servings + ' porzioni';
+      }
+    }
+
+    if (servingsDisplay) servingsDisplay.textContent = servings;
+
+    // 4. Render Ingredients
+    if (ingredientList) {
+      ingredientList.innerHTML = '';
+      calc.ingredients.forEach(ing => {
+        const item = document.createElement('div');
+        item.className = 'ingredient-item';
+        
+        let icon = '🔸';
+        const k = ing.key.toLowerCase();
+        if (k.includes('pasta')) icon = '🍝';
+        else if (k.includes('guanciale') || k.includes('prosciutto') || k.includes('lard')) icon = '🥓';
+        else if (k.includes('yolks') || k.includes('egg')) icon = '🍳';
+        else if (k.includes('pecorino') || k.includes('mozzarella') || k.includes('cheese')) icon = '🧀';
+        else if (k.includes('pepper') || k.includes('salt')) icon = '🧂';
+        else if (k.includes('pomodoro') || k.includes('tomato')) icon = '🍅';
+        else if (k.includes('vino') || k.includes('wine')) icon = '🍷';
+        else if (k.includes('water')) icon = '💧';
+        else if (k.includes('chili')) icon = '🌶️';
+        else if (k.includes('veal') || k.includes('meat') || k.includes('tail')) icon = '🥩';
+        else if (k.includes('sage') || k.includes('mint') || k.includes('rosemary') || k.includes('parsley')) icon = '🌿';
+        else if (k.includes('butter')) icon = '🧈';
+        else if (k.includes('celery') || k.includes('artichoke')) icon = '🥬';
+        else if (k.includes('cocoa')) icon = '🍫';
+        else if (k.includes('pinenuts')) icon = '🌰';
+        else if (k.includes('chops')) icon = '🍖';
+        else if (k.includes('rice')) icon = '🍚';
+        else if (k.includes('flour') || k.includes('breadcrumbs')) icon = '🌾';
+        else if (k.includes('cream') || k.includes('milk')) icon = '🥛';
+        else if (k.includes('oil')) icon = '🫒';
+        else if (k.includes('lemon')) icon = '🍋';
+
+        let easyHint = '';
+        if (currentLevel === 'easy') {
+          if (ing.key === 'yolks') {
+            easyHint = `<div class="ing-easy-hint">${window.I18N.t('hintYolks')}</div>`;
+          } else if (ing.key === 'pecorino') {
+            easyHint = `<div class="ing-easy-hint">${window.I18N.t('hintPecorino')}</div>`;
+          } else if (ing.key === 'water' && currentRecipe === 'cacioepepe') {
+            easyHint = `<div class="ing-easy-hint">${window.I18N.t('hintWater')}</div>`;
+          }
         }
-      }
 
-      item.innerHTML = `
-        <div class="ing-name-wrap">
-          <span class="ing-icon">${icon}</span>
-          <div>
-            <div class="ing-name">${ing.name}</div>
-            ${easyHint}
+        item.innerHTML = `
+          <div class="ing-name-wrap">
+            <span class="ing-icon">${icon}</span>
+            <div>
+              <div class="ing-name">${ing.name}</div>
+              ${easyHint}
+            </div>
           </div>
-        </div>
-        <span class="ing-amount">${ing.formatted}</span>
-      `;
-      ingredientList.appendChild(item);
-    });
+          <span class="ing-amount">${ing.formatted}</span>
+        `;
+        ingredientList.appendChild(item);
+      });
+    }
 
-    // 3. Render Steps & Live Timers
-    stepsList.innerHTML = '';
-    recipeData.steps.forEach((step, idx) => {
-      const stepCard = document.createElement('div');
-      stepCard.className = 'step-card';
-      stepCard.id = `step_${idx}`;
+    // 5. Render Steps & Live Timers
+    if (stepsList) {
+      stepsList.innerHTML = '';
+      recipeData.steps.forEach((step, idx) => {
+        const stepCard = document.createElement('div');
+        stepCard.className = 'step-card';
+        stepCard.id = `step_card_${idx}`;
 
-      const timerId = `${currentRecipe}_step_${idx}`;
-      const totalSec = (step.timerMin || 5) * 60;
-      if (!activeTimers[timerId]) {
-        activeTimers[timerId] = {
-          totalSec: totalSec,
-          remainingSec: totalSec,
-          interval: null,
-          running: false
-        };
-      }
+        const timerId = `${currentRecipe}_step_${idx}`;
+        const totalSec = (step.timerMin || 5) * 60;
+        if (!activeTimers[timerId]) {
+          activeTimers[timerId] = {
+            totalSec: totalSec,
+            remainingSec: totalSec,
+            interval: null,
+            running: false
+          };
+        } else if (activeTimers[timerId].running) {
+          stepCard.classList.add('running-timer');
+        }
 
-      stepCard.innerHTML = `
-        <div class="step-header">
-          <div class="step-title-wrap">
-            <span class="step-badge">${idx + 1}</span>
-            <span class="step-title">${step.title}</span>
+        stepCard.innerHTML = `
+          <div class="step-header">
+            <div class="step-title-wrap">
+              <span class="step-badge">${idx + 1}</span>
+              <span class="step-title">${step.title}</span>
+            </div>
           </div>
-        </div>
-        <p class="step-desc">${step.desc}</p>
-        <div class="step-timer-row">
-          <span class="timer-countdown" id="timer_disp_${timerId}">${formatTimerDisplay(activeTimers[timerId].remainingSec)}</span>
-          <div class="timer-btn-group">
-            <button class="timer-btn" data-timer-action="start" data-timer-id="${timerId}">▶ ${window.I18N.t('start')}</button>
-            <button class="timer-btn" data-timer-action="pause" data-timer-id="${timerId}">⏸ ${window.I18N.t('pause')}</button>
-            <button class="timer-btn" data-timer-action="reset" data-timer-id="${timerId}">🔄 ${window.I18N.t('reset')}</button>
+          <p class="step-desc">${step.desc}</p>
+          <div class="step-timer-row">
+            <span class="timer-countdown" id="timer_disp_${timerId}">${formatTimerDisplay(activeTimers[timerId].remainingSec)}</span>
+            <div class="timer-btn-group">
+              <button type="button" class="timer-btn" data-timer-action="start" data-timer-id="${timerId}">▶ ${window.I18N.t('start')}</button>
+              <button type="button" class="timer-btn" data-timer-action="pause" data-timer-id="${timerId}">⏸ ${window.I18N.t('pause')}</button>
+              <button type="button" class="timer-btn" data-timer-action="reset" data-timer-id="${timerId}">🔄 ${window.I18N.t('reset')}</button>
+            </div>
           </div>
-        </div>
-      `;
-      stepsList.appendChild(stepCard);
-    });
+        `;
+        stepsList.appendChild(stepCard);
+      });
 
-    // Attach timer actions
-    stepsList.querySelectorAll('[data-timer-action]').forEach(btn => {
-      btn.addEventListener('click', handleTimerAction);
-    });
+      // Attach timer actions
+      stepsList.querySelectorAll('[data-timer-action]').forEach(btn => {
+        btn.addEventListener('click', handleTimerAction);
+      });
+    }
   }
 
   function formatTimerDisplay(seconds) {
@@ -201,10 +282,13 @@
     if (!tState) return;
 
     const dispEl = document.getElementById(`timer_disp_${timerId}`);
+    const parentCard = e.target.closest('.step-card');
 
     if (action === 'start') {
       if (tState.running) return;
       tState.running = true;
+      if (parentCard) parentCard.classList.add('running-timer');
+
       tState.interval = setInterval(() => {
         if (tState.remainingSec > 0) {
           tState.remainingSec--;
@@ -212,19 +296,60 @@
         } else {
           clearInterval(tState.interval);
           tState.running = false;
+          if (parentCard) parentCard.classList.remove('running-timer');
           playAlarmBeep();
-          if (dispEl) dispEl.textContent = `🔔 ${window.I18N.t('done')}!`;
+          if (dispEl) dispEl.textContent = `🔔 ${window.I18N.t('done')}`;
         }
       }, 1000);
     } else if (action === 'pause') {
       if (tState.interval) clearInterval(tState.interval);
       tState.running = false;
+      if (parentCard) parentCard.classList.remove('running-timer');
     } else if (action === 'reset') {
       if (tState.interval) clearInterval(tState.interval);
       tState.running = false;
+      if (parentCard) parentCard.classList.remove('running-timer');
       tState.remainingSec = tState.totalSec;
       if (dispEl) dispEl.textContent = formatTimerDisplay(tState.remainingSec);
     }
+  }
+
+  // --- LANGUAGE MODAL RENDERING ---
+  function renderLangModal() {
+    if (!langOptionsGrid) return;
+    langOptionsGrid.innerHTML = '';
+
+    window.I18N.languages.forEach(l => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'lang-card-btn' + (l.code === window.I18N.currentLang ? ' active' : '');
+      btn.setAttribute('data-lang-code', l.code);
+      btn.innerHTML = `
+        <div class="lang-card-left">
+          <span class="lang-card-flag">${l.flag}</span>
+          <div class="lang-card-names">
+            <span class="lang-card-native">${l.nativeName}</span>
+            <span class="lang-card-intl">${l.name} (${l.code.toUpperCase()})</span>
+          </div>
+        </div>
+        <span class="lang-card-check">✓</span>
+      `;
+      btn.addEventListener('click', () => {
+        window.I18N.setLanguage(l.code);
+        closeLangModal();
+        updateAllTexts();
+      });
+      langOptionsGrid.appendChild(btn);
+    });
+  }
+
+  function openLangModal() {
+    renderLangModal();
+    if (langModal) langModal.classList.remove('hidden');
+  }
+
+  function closeLangModal() {
+    if (langModal) langModal.classList.add('hidden');
   }
 
   // --- I18N REFRESH ---
@@ -237,15 +362,83 @@
       }
     });
 
-    currentLangLabel.textContent = window.I18N.currentLang.toUpperCase();
-    currentUnitLabel.textContent = window.I18N.currentUnit === 'metric' ? 'Metric (°C/g)' : 'Imperial (°F/oz)';
+    if (currentLangLabel) {
+      currentLangLabel.textContent = window.I18N.currentLang.toUpperCase();
+    }
+    if (currentUnitLabel) {
+      currentUnitLabel.textContent = window.I18N.currentUnit === 'metric' ? '°C / g' : '°F / oz';
+    }
 
     renderRecipe();
   }
 
+  // --- INTERSECTION OBSERVER FOR BOTTOM NAV ---
+  function setupScrollSpy() {
+    const sections = [
+      { id: 'calculatorSection', tab: 'calculatorSection' },
+      { id: 'thermalSection', tab: 'thermalSection' },
+      { id: 'liveKitchenSection', tab: 'liveKitchenSection' },
+      { id: 'scienceSection', tab: 'scienceSection' },
+      { id: 'emergencySection', tab: 'scienceSection' }
+    ];
+
+    if (!('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const match = sections.find(s => s.id === entry.target.id);
+          if (match) {
+            bottomNavBtns.forEach(btn => {
+              const tabTarget = btn.getAttribute('data-tab');
+              btn.classList.toggle('active', tabTarget === match.tab);
+            });
+          }
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0.1
+    });
+
+    sections.forEach(s => {
+      const el = document.getElementById(s.id);
+      if (el) observer.observe(el);
+    });
+  }
+
   // --- EVENT LISTENERS ---
 
-  // Recipe Selector
+  // Category Filter Pills
+  categoryPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      categoryPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentCategory = pill.getAttribute('data-category');
+
+      let firstVisibleRecipe = null;
+      recipeChips.forEach(chip => {
+        const chipCat = chip.getAttribute('data-category');
+        const visible = (currentCategory === 'all' || chipCat === currentCategory);
+        chip.classList.toggle('hidden', !visible);
+        if (visible && !firstVisibleRecipe) {
+          firstVisibleRecipe = chip.getAttribute('data-recipe');
+        }
+      });
+
+      // If active recipe is now hidden, select first visible
+      const activeChip = document.querySelector(`.recipe-chip[data-recipe="${currentRecipe}"]`);
+      if (activeChip && activeChip.classList.contains('hidden') && firstVisibleRecipe) {
+        recipeChips.forEach(c => c.classList.remove('active'));
+        const newActive = document.querySelector(`.recipe-chip[data-recipe="${firstVisibleRecipe}"]`);
+        if (newActive) newActive.classList.add('active');
+        currentRecipe = firstVisibleRecipe;
+        renderRecipe();
+      }
+    });
+  });
+
+  // Recipe Selector Chips
   recipeChips.forEach(chip => {
     chip.addEventListener('click', () => {
       recipeChips.forEach(c => c.classList.remove('active'));
@@ -255,20 +448,34 @@
     });
   });
 
-  // Servings Stepper
-  servingsMinus.addEventListener('click', () => {
-    if (servings > 1) {
-      servings--;
+  // Portion Size Selector (Standard vs Abbondante)
+  portionSizeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      portionSizeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      portionSize = btn.getAttribute('data-size');
       renderRecipe();
-    }
+    });
   });
 
-  servingsPlus.addEventListener('click', () => {
-    if (servings < 24) {
-      servings++;
-      renderRecipe();
-    }
-  });
+  // Servings Stepper
+  if (servingsMinus) {
+    servingsMinus.addEventListener('click', () => {
+      if (servings > 1) {
+        servings--;
+        renderRecipe();
+      }
+    });
+  }
+
+  if (servingsPlus) {
+    servingsPlus.addEventListener('click', () => {
+      if (servings < 24) {
+        servings++;
+        renderRecipe();
+      }
+    });
+  }
 
   // Level Mode Toggle (Easy vs Pro)
   if (modeEasyBtn && modeProBtn) {
@@ -287,43 +494,69 @@
     });
   }
 
-  // Language Toggle
-  langToggleBtn.addEventListener('click', () => {
-    const nextLang = window.I18N.currentLang === 'it' ? 'en' : 'it';
-    window.I18N.setLanguage(nextLang);
-    updateAllTexts();
-  });
+  // Language Modal Open & Close
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', openLangModal);
+  }
+
+  if (closeLangModalBtn) {
+    closeLangModalBtn.addEventListener('click', closeLangModal);
+  }
+
+  if (langModal) {
+    langModal.addEventListener('click', (e) => {
+      if (e.target === langModal) closeLangModal();
+    });
+  }
 
   // Unit Toggle
-  unitToggleBtn.addEventListener('click', () => {
-    const nextUnit = window.I18N.currentUnit === 'metric' ? 'imperial' : 'metric';
-    window.I18N.setUnit(nextUnit);
-    updateAllTexts();
-  });
+  if (unitToggleBtn) {
+    unitToggleBtn.addEventListener('click', () => {
+      const nextUnit = window.I18N.currentUnit === 'metric' ? 'imperial' : 'metric';
+      window.I18N.setUnit(nextUnit);
+      updateAllTexts();
+    });
+  }
 
   // Theme Toggle
-  themeToggleBtn.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', nextTheme);
-    document.body.classList.toggle('light-mode', nextTheme === 'light');
-    localStorage.setItem('romalab_theme', nextTheme);
-  });
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      document.body.classList.toggle('light-mode', nextTheme === 'light');
+      localStorage.setItem('romalab_theme', nextTheme);
+    });
+  }
 
   // Troubleshoot Modal
-  troubleshootBtn.addEventListener('click', () => {
-    troubleshootModal.classList.remove('hidden');
+  if (troubleshootBtn && troubleshootModal) {
+    troubleshootBtn.addEventListener('click', () => {
+      troubleshootModal.classList.remove('hidden');
+    });
+  }
+
+  if (closeTroubleshootBtn && troubleshootModal) {
+    closeTroubleshootBtn.addEventListener('click', () => {
+      troubleshootModal.classList.add('hidden');
+    });
+  }
+
+  if (troubleshootModal) {
+    troubleshootModal.addEventListener('click', (e) => {
+      if (e.target === troubleshootModal) troubleshootModal.classList.add('hidden');
+    });
+  }
+
+  // Close modals on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeLangModal();
+      if (troubleshootModal) troubleshootModal.classList.add('hidden');
+    }
   });
 
-  closeTroubleshootBtn.addEventListener('click', () => {
-    troubleshootModal.classList.add('hidden');
-  });
-
-  troubleshootModal.addEventListener('click', (e) => {
-    if (e.target === troubleshootModal) troubleshootModal.classList.add('hidden');
-  });
-
-  // Bottom Nav
+  // Bottom Nav Smooth Scroll
   bottomNavBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       bottomNavBtns.forEach(b => b.classList.remove('active'));
@@ -344,8 +577,9 @@
     document.body.classList.toggle('light-mode', savedTheme === 'light');
 
     updateAllTexts();
+    setupScrollSpy();
 
-    // Dismiss splash screen
+    // Dismiss splash screen smoothly
     setTimeout(() => {
       const splash = document.getElementById('splashScreen');
       if (splash) splash.classList.add('fade-out');

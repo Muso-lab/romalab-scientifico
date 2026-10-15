@@ -31,7 +31,7 @@
       <div class="splash-loader">
         <div class="splash-loader-bar"></div>
       </div>
-      <span class="splash-version" data-i18n="splashVersion">v1.0.0 Pro • Edizione Internazionale</span>
+      <span class="splash-version" data-i18n="splashVersion">v1.1.0 Pro • Edizione Globale Multi-Lingua</span>
     </div>
   </div>
 
@@ -47,41 +47,94 @@
         </div>
       </div>
       <div class="header-actions-row">
-        <button id="langToggleBtn" class="header-action-btn" aria-label="Cambia Lingua">
+        <button id="langToggleBtn" class="header-action-btn" aria-label="Cambia Lingua" title="Select Language">
           🌐 <span id="currentLangLabel">IT</span>
         </button>
-        <button id="unitToggleBtn" class="header-action-btn" aria-label="Cambia Unità">
-          ⚖️ <span id="currentUnitLabel">Metric (°C/g)</span>
+        <button id="unitToggleBtn" class="header-action-btn" aria-label="Cambia Unità" title="Toggle Units">
+          ⚖️ <span id="currentUnitLabel">°C / g</span>
         </button>
-        <button id="troubleshootBtn" class="header-action-btn" aria-label="Pronto Soccorso">
-          🆘 <span data-i18n="btnTroubleshoot">Pronto Soccorso</span>
+        <button id="troubleshootBtn" class="header-action-btn" aria-label="Pronto Soccorso" title="SOS Emergency Aid">
+          🆘 <span data-i18n="btnTroubleshoot">SOS Guida</span>
         </button>
-        <button id="themeToggleBtn" class="header-action-btn" aria-label="Cambia Tema">
+        <button id="themeToggleBtn" class="header-action-btn" aria-label="Cambia Tema" title="Toggle Theme">
           🌓
         </button>
       </div>
     </div>
   </header>
 
-  <!-- RECIPE SELECTOR (THE BIG 4) -->
+  <!-- CATEGORY FILTER STRIP -->
+  <div class="category-filter-wrap">
+    <div class="category-filter-scroll">
+      <button type="button" class="category-pill active" data-category="all">
+        <span data-i18n="catAll">Tutte le Ricette</span>
+      </button>
+      <button type="button" class="category-pill" data-category="primi">
+        <span data-i18n="catPrimi">🍝 Primi (The Big 4)</span>
+      </button>
+      <button type="button" class="category-pill" data-category="secondi">
+        <span data-i18n="catSecondi">🥩 I Grandi Secondi</span>
+      </button>
+      <button type="button" class="category-pill" data-category="contorni">
+        <span data-i18n="catContorni">🥬 Fritti & Contorni</span>
+      </button>
+      <button type="button" class="category-pill" data-category="dolci">
+        <span data-i18n="catDolci">🥐 Dolci & Lievitati</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- RECIPE SELECTOR (11 ROMAN CLASSICS) -->
   <div class="recipe-selector-wrap">
     <div class="recipe-selector-grid">
-      <div class="recipe-chip active" data-recipe="carbonara">
+      <!-- Primi -->
+      <button type="button" class="recipe-chip active" data-recipe="carbonara" data-category="primi">
         <span class="chip-icon">🍳</span>
         <span class="chip-name">Carbonara</span>
-      </div>
-      <div class="recipe-chip" data-recipe="cacioepepe">
+      </button>
+      <button type="button" class="recipe-chip" data-recipe="cacioepepe" data-category="primi">
         <span class="chip-icon">🧀</span>
         <span class="chip-name">Cacio e Pepe</span>
-      </div>
-      <div class="recipe-chip" data-recipe="amatriciana">
+      </button>
+      <button type="button" class="recipe-chip" data-recipe="amatriciana" data-category="primi">
         <span class="chip-icon">🍅</span>
         <span class="chip-name">Amatriciana</span>
-      </div>
-      <div class="recipe-chip" data-recipe="gricia">
+      </button>
+      <button type="button" class="recipe-chip" data-recipe="gricia" data-category="primi">
         <span class="chip-icon">🥓</span>
         <span class="chip-name">Gricia</span>
-      </div>
+      </button>
+      <!-- Secondi -->
+      <button type="button" class="recipe-chip" data-recipe="saltimbocca" data-category="secondi">
+        <span class="chip-icon">🥩</span>
+        <span class="chip-name">Saltimbocca</span>
+      </button>
+      <button type="button" class="recipe-chip" data-recipe="coda" data-category="secondi">
+        <span class="chip-icon">🐂</span>
+        <span class="chip-name">Coda Vaccinara</span>
+      </button>
+      <button type="button" class="recipe-chip" data-recipe="abbacchio" data-category="secondi">
+        <span class="chip-icon">🍖</span>
+        <span class="chip-name">Scottadito</span>
+      </button>
+      <!-- Contorni & Fritti -->
+      <button type="button" class="recipe-chip" data-recipe="carciofigiudia" data-category="contorni">
+        <span class="chip-icon">🥬</span>
+        <span class="chip-name">Carciofi Giudia</span>
+      </button>
+      <button type="button" class="recipe-chip" data-recipe="carciofiromana" data-category="contorni">
+        <span class="chip-icon">🌿</span>
+        <span class="chip-name">Carciofi Romana</span>
+      </button>
+      <button type="button" class="recipe-chip" data-recipe="suppli" data-category="contorni">
+        <span class="chip-icon">🍚</span>
+        <span class="chip-name">Supplì Telefono</span>
+      </button>
+      <!-- Dolci -->
+      <button type="button" class="recipe-chip" data-recipe="maritozzo" data-category="dolci">
+        <span class="chip-icon">🥐</span>
+        <span class="chip-name">Maritozzo Panna</span>
+      </button>
     </div>
   </div>
 
@@ -98,7 +151,7 @@
       </button>
     </div>
     <div id="modeDescriptionBanner" class="mode-description-banner">
-      🏆 Disciplinare ortodosso: 100% tuorli freschi, Pecorino Romano DOP in purezza e risottatura con amidi estratti.
+      <!-- Populated dynamically via JS -->
     </div>
   </div>
 
@@ -106,13 +159,15 @@
   <main class="main-content">
 
     <!-- 1. RECIPE HERO SUMMARY -->
-    <section class="card recipe-hero-card">
-      <h2 id="recipeHeroTitle" class="recipe-hero-title">Spaghetti alla Carbonara</h2>
+    <section class="card recipe-hero-card" id="heroSection">
+      <div class="recipe-hero-top">
+        <h2 id="recipeHeroTitle" class="recipe-hero-title">Spaghetti alla Carbonara</h2>
+      </div>
       <p id="recipeHeroDesc" class="recipe-hero-desc">Tuorli freschi, guanciale croccante, Pecorino Romano DOP e pepe tostato.</p>
       <div class="recipe-meta-row">
         <span class="meta-badge">📍 <span id="recipeMetaOrigin">Roma (1944)</span></span>
         <span class="meta-badge">⚡ <span id="recipeMetaDiff">Media</span></span>
-        <span class="meta-badge">🔬 <span id="recipeMetaEmulsion">Emulsione 62-66°C</span></span>
+        <span class="meta-badge">🔬 <span id="recipeMetaEmulsion">58°C - 65°C</span></span>
       </div>
     </section>
 
@@ -120,19 +175,32 @@
     <section class="card" id="calculatorSection">
       <div class="card-header">
         <h3 class="card-title">⚖️ <span data-i18n="ingredientsTitle">Dosaggi Scientifici al Grammo</span></h3>
-        <p class="card-subtitle" data-i18n="appTagline">Calcolo proporzionale automatico di uova, grasso fuso e amido d'acqua.</p>
+        <p class="card-subtitle" data-i18n="ingredientsSubtitle">Calcolo proporzionale automatico di uova, grasso nobile e amido d'acqua.</p>
       </div>
 
       <!-- Servings Stepper -->
       <div class="stepper-row">
         <div class="stepper-label">
           <span class="stepper-title" data-i18n="servings">Numero Persone</span>
-          <span class="stepper-desc" id="servingsHint">Porzione standard: 100g pasta a persona</span>
+          <span class="stepper-desc" id="servingsHint">Porzione standard: 100g di pasta a persona</span>
         </div>
         <div class="stepper-controls">
           <button id="servingsMinus" class="stepper-btn" aria-label="Diminuisci">-</button>
           <span id="servingsDisplay" class="stepper-display">4</span>
           <button id="servingsPlus" class="stepper-btn" aria-label="Aumenta">+</button>
+        </div>
+      </div>
+
+      <!-- Portion Size Selector (Standard vs Abbondante for Primi) -->
+      <div class="portion-size-row" id="portionSizeRow">
+        <span class="portion-size-title" data-i18n="portionSize">Dose Pasta:</span>
+        <div class="portion-size-strip">
+          <button type="button" class="portion-size-btn active" data-size="standard">
+            <span data-i18n="portionStandard">Standard (100g)</span>
+          </button>
+          <button type="button" class="portion-size-btn" data-size="abbondante">
+            <span data-i18n="portionAbbondante">🍝 Abbondante (130g)</span>
+          </button>
         </div>
       </div>
 
@@ -146,21 +214,30 @@
     <section class="card thermal-gauge-card" id="thermalSection">
       <div class="card-header">
         <h3 class="card-title">🌡️ <span data-i18n="emulsionThermodynamics">Finestra Termica di Mantecatura</span></h3>
-        <p class="card-subtitle">La fisica dell'emulsione tra amidi, lipidi del guanciale e proteine.</p>
+        <p class="card-subtitle" data-i18n="emulsionSubtitle">La fisica dell'emulsione tra amidi, lipidi del guanciale e proteine.</p>
       </div>
 
       <div class="temp-indicator-box">
-        <div>
-          <div class="temp-target-label">Zona Sicura di Mantecatura:</div>
+        <div class="temp-indicator-left">
+          <div class="temp-target-label" data-i18n="thermalSafeZone">Zona Sicura di Mantecatura:</div>
           <div id="tempTargetDisplay" class="temp-target-range">58°C - 65°C</div>
         </div>
-        <span style="font-size: 2rem;">🍳</span>
+        <div class="temp-badge-wrap">
+          <span class="temp-status-pill" id="tempStatusPill">⚡ Sweet Spot</span>
+        </div>
       </div>
 
-      <div class="temp-bar-wrap">
-        <div class="temp-segment-cold" title="Troppo freddo (<50°C)"></div>
-        <div class="temp-segment-optimal" title="Zona d'Oro Emulsione (58-65°C)"></div>
-        <div class="temp-segment-danger" title="Pericolo Frittata (>68°C)"></div>
+      <div class="temp-gauge-container">
+        <div class="temp-bar-wrap">
+          <div class="temp-segment-cold" title="Troppo freddo (<50°C)"></div>
+          <div class="temp-segment-optimal" title="Zona d'Oro Emulsione (58-65°C)"></div>
+          <div class="temp-segment-danger" title="Pericolo Frittata (>68°C)"></div>
+        </div>
+        <div class="temp-ruler-labels">
+          <span class="ruler-item cold" data-i18n="thermalCold">&lt;50°C Freddo</span>
+          <span class="ruler-item optimal" data-i18n="thermalOptimal">58-65°C Emulsione</span>
+          <span class="ruler-item danger" data-i18n="thermalDanger">&gt;68°C Frittata</span>
+        </div>
       </div>
 
       <p id="thermalExplanationText" class="thermal-explanation">
@@ -172,7 +249,7 @@
     <section class="card" id="liveKitchenSection">
       <div class="card-header">
         <h3 class="card-title">⏱️ <span data-i18n="startCooking">Preparazione Passo-Passo con Timer</span></h3>
-        <p class="card-subtitle">Segui le fasi in diretta per non sbagliare tempi e temperature.</p>
+        <p class="card-subtitle" data-i18n="cookingSubtitle">Segui le fasi in diretta per non sbagliare tempi e temperature.</p>
       </div>
 
       <div id="stepsList" class="steps-container">
@@ -184,25 +261,25 @@
     <section class="card" id="scienceSection">
       <div class="card-header">
         <h3 class="card-title">🧪 <span data-i18n="substitutionsTitle">Guida Internazionale agli Ingredienti</span></h3>
-        <p class="card-subtitle">Disciplinari, chimica e sostituti ammessi all'estero.</p>
+        <p class="card-subtitle" data-i18n="substitutionsSubtitle">Disciplinari, chimica e sostituti ammessi all'estero.</p>
       </div>
 
       <div class="trouble-item">
-        <div class="trouble-q">🥓 Guanciale vs Bacon vs Pancetta</div>
+        <div class="trouble-q" data-i18n="subGuancialeTitle">🥓 Guanciale vs Bacon vs Pancetta</div>
         <div class="trouble-a" data-i18n="guancialeNote">
           Il guanciale ha un grasso nobile a basso punto di fusione che crea un'emulsione vellutata. Alternativa accettabile all'estero: Pancetta tesa non affumicata. Evitare il bacon americano affumicato con zucchero.
         </div>
       </div>
 
       <div class="trouble-item">
-        <div class="trouble-q">🧀 Pecorino Romano DOP & Il Taglio</div>
+        <div class="trouble-q" data-i18n="subPecorinoTitle">🧀 Pecorino Romano DOP & Il Taglio</div>
         <div class="trouble-a" data-i18n="pecorinoNote">
           Formaggio ovino a pasta dura e sapore sapido. Se all'estero risulta troppo pungente, il compromesso gourmet è il taglio 70% Pecorino Romano DOP e 30% Parmigiano Reggiano 24 mesi.
         </div>
       </div>
 
       <div class="trouble-item">
-        <div class="trouble-q">🌾 L'Amido della Pasta Trafilata al Bronzo</div>
+        <div class="trouble-q" data-i18n="subPastaTitle">🌾 L'Amido della Pasta Trafilata al Bronzo</div>
         <div class="trouble-a" data-i18n="pastaNote">
           La trafilatura al bronzo crea una superficie rugosa che cede amido libero nell'acqua. L'amido agisce da tensioattivo chimico, legando indissolubilmente l'acqua e il grasso fluido del guanciale.
         </div>
@@ -218,32 +295,32 @@
 
       <div class="emergency-grid">
         <div class="emergency-box">
-          <div class="emergency-ing-title">🥓 Se manca il Guanciale:</div>
-          <div class="emergency-level good">
-            <strong>✅ Opzione 1 (Ottima):</strong> Pancetta tesa artigianale NON affumicata. Ridurre leggermente il sale nell'acqua.
+          <div class="emergency-ing-title" data-i18n="emGuancialeTitle">🥓 Se manca il Guanciale:</div>
+          <div class="emergency-level good" data-i18n="emGuancialeOpt1">
+            ✅ Opzione 1 (Ottima): Pancetta tesa artigianale NON affumicata. Ridurre leggermente il sale nell'acqua.
           </div>
-          <div class="emergency-level warning">
-            <strong>⚠️ Opzione 2 (Estrema - Estero):</strong> Bacon americano. <em>Trucco salvavita:</em> sbollentare le fette in acqua bollente per 2 minuti prima di rosolare, per estrarre il fumo artificiale e gli zuccheri!
-          </div>
-        </div>
-
-        <div class="emergency-box">
-          <div class="emergency-ing-title">🧀 Se manca il Pecorino Romano:</div>
-          <div class="emergency-level good">
-            <strong>✅ Opzione 1 (Consigliata Easy):</strong> 50% Pecorino (anche toscano/sardo) e 50% Parmigiano Reggiano. Molto più facile da sciogliere senza grumi!
-          </div>
-          <div class="emergency-level warning">
-            <strong>⚠️ Opzione 2:</strong> Solo Parmigiano Reggiano o Grana. Aggiungere 1 g di sale e una macinata extra di pepe per compensare la minore sapidità ovina.
+          <div class="emergency-level warning" data-i18n="emGuancialeOpt2">
+            ⚠️ Opzione 2 (Estrema - Estero): Bacon americano. Trucco salvavita: sbollentare le fette in acqua bollente per 2 minuti prima di rosolare, per estrarre il fumo artificiale e gli zuccheri!
           </div>
         </div>
 
         <div class="emergency-box">
-          <div class="emergency-ing-title">🌾 Se la pasta è liscia (poco amido):</div>
-          <div class="emergency-level good">
-            <strong>✅ Il Trucco della Pentola Piccola:</strong> Cuoci la pasta in metà acqua del solito (es. 1.5L per 300g). L'acqua diventerà un brodo d'amido super-concentrato!
+          <div class="emergency-ing-title" data-i18n="emPecorinoTitle">🧀 Se manca il Pecorino Romano:</div>
+          <div class="emergency-level good" data-i18n="emPecorinoOpt1">
+            ✅ Opzione 1 (Consigliata Easy): 50% Pecorino (anche toscano/sardo) e 50% Parmigiano Reggiano. Molto più facile da sciogliere senza grumi!
           </div>
-          <div class="emergency-level warning">
-            <strong>🔬 Trucco Molecolare di Emergenza:</strong> Sciogli 1/2 cucchiaino raso di amido di mais o fecola in una tazzina d'acqua fredda e versalo in padella: creerà l'emulsione cremosa istantaneamente.
+          <div class="emergency-level warning" data-i18n="emPecorinoOpt2">
+            ⚠️ Opzione 2: Solo Parmigiano Reggiano o Grana. Aggiungere 1 g di sale e una macinata extra di pepe per compensare la minore sapidità ovina.
+          </div>
+        </div>
+
+        <div class="emergency-box">
+          <div class="emergency-ing-title" data-i18n="emStarchTitle">🌾 Se la pasta è liscia (poco amido):</div>
+          <div class="emergency-level good" data-i18n="emStarchOpt1">
+            ✅ Il Trucco della Pentola Piccola: Cuoci la pasta in metà acqua del solito (es. 1.5L per 300g). L'acqua diventerà un brodo d'amido super-concentrato!
+          </div>
+          <div class="emergency-level warning" data-i18n="emStarchOpt2">
+            🔬 Trucco Molecolare di Emergenza: Sciogli 1/2 cucchiaino raso di amido di mais o fecola in una tazzina d'acqua fredda e versalo in padella: creerà l'emulsione cremosa istantaneamente.
           </div>
         </div>
       </div>
@@ -251,12 +328,25 @@
 
   </main>
 
+  <!-- LANGUAGE SELECTION MODAL -->
+  <div id="langModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="langModalTitle">
+    <div class="modal-card lang-modal-card">
+      <div class="modal-header">
+        <h3 id="langModalTitle" class="modal-title">🌐 <span data-i18n="selectLanguage">Seleziona Lingua</span></h3>
+        <button id="closeLangModalBtn" class="modal-close-btn" aria-label="Chiudi">&times;</button>
+      </div>
+      <div id="langOptionsGrid" class="lang-options-grid">
+        <!-- Rendered dynamically by js/app.js for all 8 languages -->
+      </div>
+    </div>
+  </div>
+
   <!-- TROUBLESHOOTING MODAL -->
-  <div id="troubleshootModal" class="modal-overlay hidden">
+  <div id="troubleshootModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="troubleModalTitle">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title" data-i18n="troubleshootTitle">🆘 Pronto Soccorso Gastronomico</h3>
-        <button id="closeTroubleshootBtn" class="modal-close-btn">&times;</button>
+        <h3 id="troubleModalTitle" class="modal-title" data-i18n="troubleshootTitle">🆘 Pronto Soccorso Gastronomico</h3>
+        <button id="closeTroubleshootBtn" class="modal-close-btn" aria-label="Chiudi">&times;</button>
       </div>
       <p class="card-subtitle" style="margin-bottom: 1rem;" data-i18n="troubleshootDesc">
         Hai sbagliato qualcosa in padella? Ecco come la fisica ti aiuta a salvare il piatto.
@@ -280,7 +370,7 @@
   </div>
 
   <!-- FIXED BOTTOM NAVIGATION BAR -->
-  <nav class="mobile-bottom-nav">
+  <nav class="mobile-bottom-nav" aria-label="Navigazione Principale">
     <button class="mobile-nav-btn active" data-tab="calculatorSection">
       <span class="mobile-nav-icon">⚖️</span>
       <span class="mobile-nav-label" data-i18n="navCalculator">Dosi</span>
@@ -291,7 +381,7 @@
     </button>
     <button class="mobile-nav-btn" data-tab="thermalSection">
       <span class="mobile-nav-icon">🌡️</span>
-      <span class="mobile-nav-label">Termica</span>
+      <span class="mobile-nav-label" data-i18n="navThermal">Termica</span>
     </button>
     <button class="mobile-nav-btn" data-tab="scienceSection">
       <span class="mobile-nav-icon">🧪</span>

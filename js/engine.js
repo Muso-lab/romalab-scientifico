@@ -26,7 +26,8 @@ const RomaLabEngine = {
   calculate(recipeId, servings = 4, customPastaWeight = null) {
     const s = Math.max(1, Math.min(24, parseInt(servings, 10) || 4));
     const lang = (window.I18N && window.I18N.currentLang) || 'it';
-    const recipeData = window.I18N ? window.I18N.dict[lang].recipes[recipeId] : null;
+    const dict = window.I18N ? window.I18N.dict : null;
+    const recipeData = dict ? ((dict[lang] && dict[lang].recipes && dict[lang].recipes[recipeId]) || (dict['it'] && dict['it'].recipes && dict['it'].recipes[recipeId])) : null;
 
     if (!recipeData) {
       throw new Error(`Recipe ${recipeId} not found in dictionary.`);
@@ -37,11 +38,13 @@ const RomaLabEngine = {
       servings: s,
       recipeId: recipeId,
       name: recipeData.name,
+      category: recipeData.category || 'primi',
       ingredients: []
     };
 
     // Calculate base pasta weight (default 100g/person or custom)
     const pastaWeight = customPastaWeight && customPastaWeight > 0 ? customPastaWeight : (baseIngs.pasta ? baseIngs.pasta.basePerPerson * s : 0);
+    const ratio = pastaWeight > 0 && baseIngs.pasta ? (pastaWeight / (baseIngs.pasta.basePerPerson * s)) : 1;
 
     for (const [key, ing] of Object.entries(baseIngs)) {
       let weightOrCount = 0;
@@ -51,10 +54,10 @@ const RomaLabEngine = {
         weightOrCount = pastaWeight;
       } else if (key === 'yolks') {
         // Authentic Roman formula: 1 yolk per person + 1 extra yolk for the skillet ("uno a testa più uno pe' la padella")
-        weightOrCount = (s * (ing.basePerPerson || 1)) + (ing.extraPadella || 0);
+        const baseCount = (s * (ing.basePerPerson || 1)) + (ing.extraPadella || 0);
+        weightOrCount = ratio > 1 ? Math.round(baseCount * ratio) : baseCount;
       } else if (ing.basePerPerson) {
         // Proportional to pasta weight ratio if custom, or direct per person
-        const ratio = pastaWeight > 0 && baseIngs.pasta ? (pastaWeight / (baseIngs.pasta.basePerPerson * s)) : 1;
         weightOrCount = ing.basePerPerson * s * ratio;
       }
 
@@ -106,6 +109,16 @@ const RomaLabEngine = {
    * Computes scientific parameters: starch extraction, water salinity, fat rendering
    */
   computeScienceMetrics(recipeId, servings, pastaGrams) {
+    if (!pastaGrams || pastaGrams === 0) {
+      return {
+        waterLiters: null,
+        waterSaltGrams: null,
+        starchGrams: null,
+        renderedFatGrams: null,
+        tempWindow: null
+      };
+    }
+
     // Starch release: Bronze-drawn pasta sheds approx 2.5g of starch per 100g into cooking water
     const estimatedStarchExtractedGrams = (pastaGrams / 100) * 2.8;
 
