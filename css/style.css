@@ -845,3 +845,130 @@ body.light-mode .mobile-bottom-nav {
   color: var(--text-muted);
   cursor: pointer;
 }
+
+/* ========================================== */
+/* LEVEL MODE SWITCHER (EASY VS PRO)          */
+/* ========================================== */
+.level-mode-wrap {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0.5rem auto 0;
+  padding: 0 0.85rem;
+}
+
+.level-mode-strip {
+  display: flex;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 4px;
+}
+
+.level-mode-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.level-mode-btn.active[data-mode="pro"] {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #000000;
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+.level-mode-btn.active[data-mode="easy"] {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.mode-description-banner {
+  margin-top: 0.4rem;
+  padding: 0.45rem 0.75rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px dashed rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.mode-description-banner.easy-active {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: #10b981;
+}
+
+/* ========================================== */
+/* EMERGENCY PANTRY STYLES                    */
+/* ========================================== */
+.emergency-card {
+  border-left: 4px solid #ef4444;
+}
+
+.emergency-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.emergency-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.emergency-ing-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text-main);
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 0.3rem;
+}
+
+.emergency-level {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.emergency-level.good {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.emergency-level.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+html[data-theme="light"] .emergency-level.good {
+  background: #f0fdf4 !important;
+  color: #15803d !important;
+}
+
+html[data-theme="light"] .emergency-level.warning {
+  background: #fffbeb !important;
+  color: #b45309 !important;
+}
+

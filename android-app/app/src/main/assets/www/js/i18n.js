@@ -51,13 +51,14 @@ const I18N = {
       alertTempOptimal: 'TEMPERATURA PERFETTA (58-65°C): Procedi all\'emulsione mantecando energicamente.',
       alertTempCold: 'Temperatura troppo bassa (< 50°C): La salsa potrebbe risultare slegata o fredda.',
 
-      // Units
-      unitGrams: 'g',
-      unitOunces: 'oz',
-      unitCelsius: '°C',
-      unitFahrenheit: '°F',
+      // Modes: Easy vs Pro
+      modeEasy: '⭐ Facile (Zero Rischi)',
+      modePro: '🏆 Pro (Maestro Tradizione)',
+      modeEasyDesc: 'Tecniche con cuscinetto di sicurezza, crema stabilizzata e tagli di formaggio più docili.',
+      modeProDesc: 'Disciplinare ortodosso, solo tuorli freschi, pecorino 100% in purezza e risottatura all\'amido.',
+      emergencyTitle: '🚨 Dispensa d\'Emergenza & Sostituzioni',
+      emergencySubtitle: 'Sei all\'estero o manca un ingrediente? I trucchi scientifici per non rinunciare al piatto.',
 
-      // Troubleshooting
       troubleshootTitle: 'Pronto Soccorso Gastronomico',
       troubleshootDesc: 'Hai sbagliato qualcosa in padella? Ecco come la fisica ti aiuta a salvare il piatto.',
       troubleClumpTitle: 'Il pecorino ha fatto i grumi gommosi?',
@@ -263,11 +264,13 @@ const I18N = {
       alertTempOptimal: 'OPTIMAL WINDOW (58-65°C / 136-149°F): Perfect temperature for silky, glossy emulsion.',
       alertTempCold: 'Temperature too low (< 50°C / 122°F): Sauce may break or feel cold.',
 
-      // Units
-      unitGrams: 'g',
-      unitOunces: 'oz',
-      unitCelsius: '°C',
-      unitFahrenheit: '°F',
+      // Modes: Easy vs Pro
+      modeEasy: '⭐ Easy (Zero Risk)',
+      modePro: '🏆 Pro (Master Tradition)',
+      modeEasyDesc: 'Foolproof safety buffer: stabilized cream, forgiving temperature curves, and milder cheese blend.',
+      modeProDesc: 'Orthodox Roman canon: 100% pure egg yolks, sharp aged pecorino, and high-starch reduction.',
+      emergencyTitle: '🚨 Emergency Pantry & Substitutes',
+      emergencySubtitle: 'Missing an authentic ingredient abroad? Scientific adaptations that protect your dinner.',
 
       // Troubleshooting
       troubleshootTitle: 'Culinary First Aid & Troubleshooting',

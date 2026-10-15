@@ -9,6 +9,7 @@
   // State
   let currentRecipe = 'carbonara';
   let servings = 4;
+  let currentLevel = 'pro'; // 'pro' | 'easy'
   let activeTimers = {};
 
   // Audio Context for countdown alarm
@@ -45,6 +46,10 @@
   const ingredientList = document.getElementById('ingredientList');
   const stepsList = document.getElementById('stepsList');
   
+  const modeEasyBtn = document.getElementById('modeEasyBtn');
+  const modeProBtn = document.getElementById('modeProBtn');
+  const modeDescriptionBanner = document.getElementById('modeDescriptionBanner');
+
   const recipeHeroTitle = document.getElementById('recipeHeroTitle');
   const recipeHeroDesc = document.getElementById('recipeHeroDesc');
   const recipeMetaOrigin = document.getElementById('recipeMetaOrigin');
@@ -71,11 +76,19 @@
     const recipeData = window.I18N.dict[lang].recipes[currentRecipe];
     if (!recipeData) return;
 
+    // 0. Update Level Mode Banner
+    if (modeDescriptionBanner) {
+      modeDescriptionBanner.textContent = currentLevel === 'easy' 
+        ? window.I18N.t('modeEasyDesc') 
+        : window.I18N.t('modeProDesc');
+      modeDescriptionBanner.classList.toggle('easy-active', currentLevel === 'easy');
+    }
+
     // 1. Update Hero
     recipeHeroTitle.textContent = recipeData.name;
     recipeHeroDesc.textContent = recipeData.shortDesc;
     recipeMetaOrigin.textContent = recipeData.origin;
-    recipeMetaDiff.textContent = recipeData.difficulty;
+    recipeMetaDiff.textContent = currentLevel === 'easy' ? '⭐ Facile (Assistita)' : recipeData.difficulty;
 
     if (currentRecipe === 'carbonara') {
       tempTargetDisplay.textContent = window.I18N.formatTemp(58) + ' - ' + window.I18N.formatTemp(65);
@@ -107,10 +120,24 @@
       else if (ing.key.includes('vino')) icon = '🍷';
       else if (ing.key.includes('water')) icon = '💧';
 
+      let easyHint = '';
+      if (currentLevel === 'easy') {
+        if (ing.key === 'yolks') {
+          easyHint = `<div style="font-size:0.7rem; color:#10b981; font-weight:600; margin-top:2px;">💡 Easy: Puoi unire 1 albume per dare massima scorrevolezza alla crema</div>`;
+        } else if (ing.key === 'pecorino') {
+          easyHint = `<div style="font-size:0.7rem; color:#10b981; font-weight:600; margin-top:2px;">💡 Easy: Taglio consigliato 50% Pecorino + 50% Parmigiano</div>`;
+        } else if (ing.key === 'water' && currentRecipe === 'cacioepepe') {
+          easyHint = `<div style="font-size:0.7rem; color:#10b981; font-weight:600; margin-top:2px;">💡 Easy: Frulla acqua tiepida (55°C) e formaggio con una frustina o minipimer</div>`;
+        }
+      }
+
       item.innerHTML = `
         <div class="ing-name-wrap">
           <span class="ing-icon">${icon}</span>
-          <span class="ing-name">${ing.name}</span>
+          <div>
+            <div class="ing-name">${ing.name}</div>
+            ${easyHint}
+          </div>
         </div>
         <span class="ing-amount">${ing.formatted}</span>
       `;
@@ -242,6 +269,23 @@
       renderRecipe();
     }
   });
+
+  // Level Mode Toggle (Easy vs Pro)
+  if (modeEasyBtn && modeProBtn) {
+    modeEasyBtn.addEventListener('click', () => {
+      modeEasyBtn.classList.add('active');
+      modeProBtn.classList.remove('active');
+      currentLevel = 'easy';
+      renderRecipe();
+    });
+
+    modeProBtn.addEventListener('click', () => {
+      modeProBtn.classList.add('active');
+      modeEasyBtn.classList.remove('active');
+      currentLevel = 'pro';
+      renderRecipe();
+    });
+  }
 
   // Language Toggle
   langToggleBtn.addEventListener('click', () => {

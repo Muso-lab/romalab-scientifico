@@ -85,6 +85,23 @@
     </div>
   </div>
 
+  <!-- LEVEL MODE SELECTOR (EASY VS PRO) -->
+  <div class="level-mode-wrap">
+    <div class="level-mode-strip">
+      <button id="modeEasyBtn" class="level-mode-btn" data-mode="easy">
+        <span class="mode-icon">⭐</span>
+        <span class="mode-label" data-i18n="modeEasy">Facile (Zero Rischi)</span>
+      </button>
+      <button id="modeProBtn" class="level-mode-btn active" data-mode="pro">
+        <span class="mode-icon">🏆</span>
+        <span class="mode-label" data-i18n="modePro">Pro (Maestro Tradizione)</span>
+      </button>
+    </div>
+    <div id="modeDescriptionBanner" class="mode-description-banner">
+      🏆 Disciplinare ortodosso: 100% tuorli freschi, Pecorino Romano DOP in purezza e risottatura con amidi estratti.
+    </div>
+  </div>
+
   <!-- MAIN APPLICATION CONTENT -->
   <main class="main-content">
 
@@ -188,6 +205,46 @@
         <div class="trouble-q">🌾 L'Amido della Pasta Trafilata al Bronzo</div>
         <div class="trouble-a" data-i18n="pastaNote">
           La trafilatura al bronzo crea una superficie rugosa che cede amido libero nell'acqua. L'amido agisce da tensioattivo chimico, legando indissolubilmente l'acqua e il grasso fluido del guanciale.
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. EMERGENCY PANTRY & SUBSTITUTIONS -->
+    <section class="card emergency-card" id="emergencySection">
+      <div class="card-header">
+        <h3 class="card-title">🚨 <span data-i18n="emergencyTitle">Dispensa d'Emergenza & Sostituzioni</span></h3>
+        <p class="card-subtitle" data-i18n="emergencySubtitle">Sei all'estero o manca un ingrediente? I trucchi scientifici per non rinunciare al piatto.</p>
+      </div>
+
+      <div class="emergency-grid">
+        <div class="emergency-box">
+          <div class="emergency-ing-title">🥓 Se manca il Guanciale:</div>
+          <div class="emergency-level good">
+            <strong>✅ Opzione 1 (Ottima):</strong> Pancetta tesa artigianale NON affumicata. Ridurre leggermente il sale nell'acqua.
+          </div>
+          <div class="emergency-level warning">
+            <strong>⚠️ Opzione 2 (Estrema - Estero):</strong> Bacon americano. <em>Trucco salvavita:</em> sbollentare le fette in acqua bollente per 2 minuti prima di rosolare, per estrarre il fumo artificiale e gli zuccheri!
+          </div>
+        </div>
+
+        <div class="emergency-box">
+          <div class="emergency-ing-title">🧀 Se manca il Pecorino Romano:</div>
+          <div class="emergency-level good">
+            <strong>✅ Opzione 1 (Consigliata Easy):</strong> 50% Pecorino (anche toscano/sardo) e 50% Parmigiano Reggiano. Molto più facile da sciogliere senza grumi!
+          </div>
+          <div class="emergency-level warning">
+            <strong>⚠️ Opzione 2:</strong> Solo Parmigiano Reggiano o Grana. Aggiungere 1 g di sale e una macinata extra di pepe per compensare la minore sapidità ovina.
+          </div>
+        </div>
+
+        <div class="emergency-box">
+          <div class="emergency-ing-title">🌾 Se la pasta è liscia (poco amido):</div>
+          <div class="emergency-level good">
+            <strong>✅ Il Trucco della Pentola Piccola:</strong> Cuoci la pasta in metà acqua del solito (es. 1.5L per 300g). L'acqua diventerà un brodo d'amido super-concentrato!
+          </div>
+          <div class="emergency-level warning">
+            <strong>🔬 Trucco Molecolare di Emergenza:</strong> Sciogli 1/2 cucchiaino raso di amido di mais o fecola in una tazzina d'acqua fredda e versalo in padella: creerà l'emulsione cremosa istantaneamente.
+          </div>
         </div>
       </div>
     </section>
